@@ -6,7 +6,10 @@ from dotenv import dotenv_values
 import json
 
 load_dotenv()
-openai_api_key = dotenv_values(".env").get("OPENAI_API_KEY")
+# openai_api_key = dotenv_values(".env").get("OPENAI_API_KEY")
+# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+openai_api_key = st.secrets["OPENAI_API_KEY"]
+
 
 st.title("Image Chat with LLM")
 
@@ -30,6 +33,7 @@ if response.status_code == 200:
     for item in st.session_state.images_info:
         st.sidebar.image(item["url"], use_column_width=True)
         st.sidebar.write(f"PRC Code: {item['prc_code']}")
+        st.sidebar.divider()
 else:
     st.error("Failed to load JSON data.")
 
@@ -54,7 +58,7 @@ if prompt := st.chat_input("Ask a question about the images:"):
         message_placeholder = st.empty()
         full_response = ""
 
-        if st.session_state.get('uploaded_image_urls'):
+        if st.session_state.get('images_info'):
             # Prepare headers and payload for the API request
             api_key = openai_api_key
             headers = {
@@ -76,7 +80,11 @@ if prompt := st.chat_input("Ask a question about the images:"):
                             "type": "image_url",
                             "image_url": item["url"]
                         } for item in st.session_state.images_info[:29]  # Limit to the first 29 images
-                    
+                     ] + [
+                        {
+                            "type": "text",
+                            "text": f"PRC Code: {item['prc_code']}"
+                        } for item in st.session_state.images_info[:29]  
                     ]
                 }
             ],
