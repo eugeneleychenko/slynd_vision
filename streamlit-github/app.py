@@ -3,10 +3,13 @@ import base64
 import requests
 from dotenv import load_dotenv
 from dotenv import dotenv_values
+import os
 
 load_dotenv()
-openai_api_key = dotenv_values(".env").get("OPENAI_API_KEY")
+# openai_api_key = dotenv_values(".env").get("OPENAI_API_KEY")
 
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+api_key = st.secrets["OPENAI_API_KEY"]
 
 
 st.title("Image Chat with LLM")
@@ -45,7 +48,8 @@ if prompt := st.chat_input("Ask a question about the uploaded images:"):
 
         if st.session_state.get('uploaded_images'):
             # Prepare headers and payload for the API request
-            api_key = openai_api_key
+            # api_key = openai_api_key
+            api_key=api_key
             headers = {
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {api_key}"
