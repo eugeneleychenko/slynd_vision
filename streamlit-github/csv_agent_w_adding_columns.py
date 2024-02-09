@@ -1,8 +1,12 @@
-from langchain_experimental.agents import create_csv_agent
+# from langchain_experimental.agents import create_csv_agent
+from langchain.agents.agent_types import AgentType
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain_openai import ChatOpenAI
+from langchain_community.callbacks import StreamlitCallbackHandler
 from dotenv import load_dotenv
 import os
 import streamlit as st
+import pandas as pd
 
 
 def main():
@@ -26,19 +30,25 @@ def main():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Preload the CSV agent with a default CSV file if not already loaded
-    if "csv_agent" not in st.session_state:
-        with open("Slynd.csv", "rb") as default_csv_file:
-            st.session_state.csv_agent = create_csv_agent(
-                ChatOpenAI(temperature=0.3, model="gpt-4-1106-preview"), default_csv_file, verbose=True
-            )
+    # # Preload the CSV agent with a default CSV file if not already loaded
+    # if "csv_agent" not in st.session_state:
+    #     with open("Slynd.csv", "rb") as default_csv_file:
+    #         st.session_state.csv_agent = create_csv_agent(
+    #             ChatOpenAI(temperature=0.2, model="gpt-4-1106-preview"), default_csv_file, verbose=True
+    #         )
 
+
+    
     # Allow user to upload a new CSV file
     csv_file = st.sidebar.file_uploader("Upload a CSV file", type="csv")
     if csv_file is not None:
-        st.session_state.csv_agent = create_csv_agent(
-            ChatOpenAI(temperature=0, api_key=openai_api_key), csv_file, verbose=True
+        dataframe = pd.read_csv(csv_file)
+        st.session_state.csv_agent = create_pandas_dataframe_agent(
+            ChatOpenAI(temperature=0, api_key=openai_api_key, model="gpt-4-0613"), dataframe, verbose=True
         )
+        
+    sidebar_container = st.sidebar.container()
+    st_callback = StreamlitCallbackHandler(sidebar_container)
 
     # Accept user input
     if user_question := st.chat_input("Ask a question about your CSV:"):
@@ -53,7 +63,7 @@ def main():
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             with st.spinner(text="In progress..."):
-                response = st.session_state.csv_agent.run(user_question)
+                response = st.session_state.csv_agent.run(user_question, callbacks=[st_callback])
                 message_placeholder.markdown(response)
                 # Add agent response to chat history
                 st.session_state.messages.append({"role": "assistant", "content": response})
