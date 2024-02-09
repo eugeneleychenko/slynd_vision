@@ -8,12 +8,13 @@ import os
 import streamlit as st
 import pandas as pd
 
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 def main():
     load_dotenv()
 
     # Load the OpenAI API key from the environment variable
-    openai_api_key = os.getenv("OPENAI_API_KEY")
+    # openai_api_key = os.getenv("OPENAI_API_KEY")
     if openai_api_key is None or openai_api_key == "":
         st.error("OPENAI_API_KEY is not set. Please set it in your environment variables.")
         st.stop()
