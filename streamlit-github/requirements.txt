@@ -1,6 +1,6 @@
 streamlit
 python-dotenv
 requests
-langchain_experimental
+langchain-experimental
 pandas
 langchain==0.1.6
