@@ -3,4 +3,4 @@ python-dotenv
 requests
 langchain_experimental
 pandas
-langchain
+langchain==0.1.6
