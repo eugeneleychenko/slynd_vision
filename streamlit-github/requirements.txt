@@ -5,3 +5,4 @@ langchain-experimental
 pandas
 langchain==0.1.6
 langchain-openai
+tabulate
