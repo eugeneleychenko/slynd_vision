@@ -6,4 +6,4 @@ pandas
 langchain==0.0.354
 langchain-openai
 tabulate
-pyautogui 
+
