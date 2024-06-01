@@ -8,7 +8,7 @@ from langchain_core.exceptions import OutputParserException
 import os
 import streamlit as st
 import pandas as pd
-import pyautogui
+
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 
