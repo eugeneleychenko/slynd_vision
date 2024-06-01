@@ -46,12 +46,7 @@ def main():
     sidebar_container = st.sidebar.container()
     st_callback = StreamlitCallbackHandler(sidebar_container)
     
-     # Screenshot button
-    if st.sidebar.button("Screenshot Chat"): 
-        screenshot = pyautogui.screenshot()
-        screenshot_path = "chat_screenshot.png"
-        screenshot.save(screenshot_path)
-        st.sidebar.success(f"Screenshot saved as {screenshot_path}")
+  
 
     # Accept user input
     if user_question := st.chat_input("Ask a question about your CSV:"):
