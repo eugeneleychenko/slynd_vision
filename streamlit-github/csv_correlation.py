@@ -15,7 +15,19 @@ st.write('Upload a CSV file to analyze correlations between different dimensions
 # File uploader
 uploaded_file = st.file_uploader('Choose a CSV file', type='csv')
 
-data = pd.read_csv(uploaded_file)
+# File uploader
+uploaded_file = st.file_uploader('Choose a CSV file', type='csv')
+
+if uploaded_file is not None:
+    try:
+        data = pd.read_csv(uploaded_file)
+        # Display the first few rows of the data
+        st.subheader('Data Preview')
+        st.write(data.head())
+    except Exception as e:
+        st.error(f"Failed to read the uploaded CSV file. Error: {e}")
+else:
+    st.warning("Please upload a CSV file.")
     
 
 # Display the first few rows of the data
