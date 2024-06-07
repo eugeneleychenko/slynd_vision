@@ -25,8 +25,6 @@ if uploaded_file is not None:
         st.error(f"Failed to read the uploaded CSV file. Error: {e}")
 else:
     st.warning("Please upload a CSV file.")
-
-
     # Specify the input columns
     input_columns = ['Patient Type', 'Funnel', 'Link to Post', 'Link', 'Preview', 'Caption Copy',
                      'Post Format', 'Media Style', 'Production Type', 'Talent', 'Conversational Tone',
