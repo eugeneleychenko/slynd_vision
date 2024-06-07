@@ -15,12 +15,8 @@ st.write('Upload a CSV file to analyze correlations between different dimensions
 # File uploader
 uploaded_file = st.file_uploader('Choose a CSV file', type='csv')
 
-if uploaded_file is not None:
-    data = pd.read_csv(uploaded_file)
-else:
-    # Load a default file from the server's filesystem
-    data = pd.read_csv('Slynd.csv')
-    st.write('No file uploaded. Loaded default Slynd.csv')
+data = pd.read_csv(uploaded_file)
+    
 
 # Display the first few rows of the data
 st.subheader('Data Preview')
