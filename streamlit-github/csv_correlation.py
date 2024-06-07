@@ -12,8 +12,6 @@ st.set_page_config(page_title='Campaign Analysis')
 st.title('Campaign Analysis')
 st.write('Upload a CSV file to analyze correlations between different dimensions.')
 
-# File uploader
-uploaded_file = st.file_uploader('Choose a CSV file', type='csv')
 
 # File uploader
 uploaded_file = st.file_uploader('Choose a CSV file', type='csv')
