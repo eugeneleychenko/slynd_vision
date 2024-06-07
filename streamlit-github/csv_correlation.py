@@ -26,10 +26,6 @@ if uploaded_file is not None:
 else:
     st.warning("Please upload a CSV file.")
 
-if uploaded_file is not None:
-    # Display the first few rows of the data
-    st.subheader('Data Preview')
-    st.write(data.head())
 
     # Specify the input columns
     input_columns = ['Patient Type', 'Funnel', 'Link to Post', 'Link', 'Preview', 'Caption Copy',
